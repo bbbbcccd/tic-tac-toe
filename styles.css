@@ -11,6 +11,7 @@ div.gameboard {
 }
 
 div.cell {
+    cursor: pointer;
     font-family: "Montserrat";
     background-color: white;
     font-size: 75px;
