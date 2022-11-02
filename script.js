@@ -6,6 +6,9 @@ const gameBoard = (() => {
     const addMarkerToBoard = (marker, index) => {
         if (_gameboard[index] === "") {
             _gameboard[index] = marker;
+            return true;
+        } else {
+            return false;
         }
     };
     const clearBoard = () => {
