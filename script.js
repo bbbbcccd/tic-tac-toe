@@ -82,7 +82,10 @@ const gameControl = (() => {
     const playGame = () => {
         _initGame();
         displayController.registerClick(e => {
-            console.log(e);
+            const index = e.target.getAttribute("data-index");
+            if (gameState.isGameOn && index !== undefined) {
+                move(index);
+            }
         })
     };
 
