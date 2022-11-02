@@ -8,11 +8,15 @@ const gameBoard = (() => {
             _gameboard[index] = marker;
         }
     };
+    const clearBoard = () => {
+        _gameboard = Array(9).fill("");
+        return _gameboard;
+    }
     const isBoardFull = () => {
         return !_gameboard.some(el => el === "");
     };
 
-    return {getBoard, addMarkerToBoard, isBoardFull};
+    return {getBoard, addMarkerToBoard, clearBoard, isBoardFull};
 })();
 
 // displayController module controls the html elements of the board
