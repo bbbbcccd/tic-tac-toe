@@ -78,8 +78,10 @@ const gameControl = (() => {
         gameState.isGameOn = true;
         const p1 = Person("Player 1", "X");
         const p2 = Person("Player 2", "O");
-        gameState.players.push(p1, p2);
+        gameState.players = [p1, p2];
         gameState.playerTurn = p1;
+        gameState.result = null;
+        gameState.winner = null;
         gameBoard.clearBoard();
         displayController.clearBoard();
     };
