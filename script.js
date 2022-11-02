@@ -89,7 +89,6 @@ const gameControl = (() => {
         if (gameBoard.addMarkerToBoard(gameState.playerTurn.getMarker(), index)) {
             const newBoard = gameBoard.getBoard();
             displayController.renderBoard(newBoard);
-            switchPlayerTurn();
         }
     };    
 
@@ -102,12 +101,44 @@ const gameControl = (() => {
         }
     }
 
+// Checks if game is over 
+    const checkGameOver = () => {
+        const board = gameBoard.getBoard();
+        switch(true) {
+            case (board[0] === board[1] && board[0] === board[2] && board[0] !== ""):
+            case (board[3] === board[4] && board[3] === board[5] && board[3] !== ""):
+            case (board[6] === board[7] && board[6] === board[8] && board[6] !== ""):    
+            case (board[0] === board[3] && board[3] === board[6] && board[0] !== ""):
+            case (board[1] === board[4] && board[1] === board[7] && board[1] !== ""):
+            case (board[2] === board[5] && board[2] === board[8] && board[2] !== ""):
+            case (board[0] === board[4] && board[0] === board[8] && board[0] !== ""):
+            case (board[2] === board[4] && board[2] === board[6] && board[2] !== ""):
+                gameState.isGameOn = false;
+                gameState.result = "win";
+                gameState.winner = gameState.playerTurn;
+                console.log("Winner: " + gameState.winner.getMarker());
+                break;
+
+            case gameBoard.isBoardFull():
+                gameState.isGameOn = false;
+                gameState.result = "tie";
+                console.log(gameState.result);
+                break;
+
+            default: 
+                console.log("Game still going");
+                break;
+        }
+    };
+
     const playGame = () => {
         _initGame();
         displayController.registerClick(e => {
             const index = e.target.getAttribute("data-index");
             if (gameState.isGameOn && index !== undefined) {
                 move(index);
+                checkGameOver();
+                switchPlayerTurn();
             }
         })
     };
