@@ -54,3 +54,32 @@ const Person = (name, marker) => {
     }
     return {getName, changeName, getMarker};
 };
+
+// gameControl module 
+// Controls the flow of the game
+const gameControl = (() => {
+
+// Stores the current game state
+    const gameState = {
+        isGameOn: false,
+        playerTurn: null,
+        result: null,
+        winner: null
+    };
+
+// Initialise game by creating 2 new players and clearing gameboard
+    const _initGame = () => {
+        gameState.isGameOn = true;
+        const p1 = Person("Player 1", "X");
+        const p2 = Person("Player 2", "O");
+        gameState.playerTurn = p1;
+        gameBoard.clearBoard();
+        displayController.clearBoard();
+    };
+
+    const playGame = () => {
+        _initGame();
+        
+    }
+    return {playGame};
+})();
