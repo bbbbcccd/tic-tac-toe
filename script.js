@@ -36,10 +36,12 @@ const displayController = (() => {
         _loopBoard(el => el.textContent = "");
     };
 
-    // Listens for clicks on cells   
-    _loopBoard((cell) => cell.addEventListener("click", (e) => console.log(e.target.getAttribute("data-index"))));
+    // Listens for clicks on gameboard   
+    const registerClick = (fn) => {
+        _gameBoard.addEventListener("click", fn);
+    };
 
-    return {renderBoard, clearBoard};
+    return {renderBoard, clearBoard, registerClick};
 })();
 
 // Person factory
