@@ -81,7 +81,10 @@ const gameControl = (() => {
 
     const playGame = () => {
         _initGame();
-        
-    }
+        displayController.registerClick(e => {
+            console.log(e);
+        })
+    };
+
     return {playGame};
 })();
