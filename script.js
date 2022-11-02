@@ -37,3 +37,16 @@ const displayController = (() => {
 
     return {renderBoard, clearBoard};
 })();
+
+// Person factory
+// Each person object has a name and a marker
+const Person = (name, marker) => {
+    let _name = name;
+    let _marker = marker;
+    const getMarker = () => _marker;
+    const getName = () => _name;
+    const changeName = (newName) => {
+        _name = newName;
+    }
+    return {getName, changeName, getMarker};
+};
