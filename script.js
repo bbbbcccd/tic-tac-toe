@@ -25,6 +25,8 @@ const gameBoard = (() => {
 // displayController module controls the html elements of the board
 const displayController = (() => {
     const _gameBoard = document.querySelector(".gameboard");
+    const restartBtn = document.querySelector("button.restart-game");
+
     const _loopBoard = (fn) => {
         for (const cell of _gameBoard.children) {
             fn(cell);
@@ -49,7 +51,7 @@ const displayController = (() => {
         _gameBoard.removeEventListener("click", fn);
     }
 
-    return {renderBoard, clearBoard, registerClick, removeListener};
+    return {renderBoard, clearBoard, registerClick, removeListener, restartBtn};
 })();
 
 // Person factory
@@ -154,5 +156,7 @@ const gameControl = (() => {
         displayController.registerClick(eventListener);
     };
 
+    displayController.restartBtn.addEventListener("click", playGame);
+    
     return {playGame};
 })();
