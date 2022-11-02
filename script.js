@@ -44,7 +44,12 @@ const displayController = (() => {
         _gameBoard.addEventListener("click", fn);
     };
 
-    return {renderBoard, clearBoard, registerClick};
+    // Remove event listener on gameboard
+    const removeListener = (fn) => {
+        _gameBoard.removeEventListener("click", fn);
+    }
+
+    return {renderBoard, clearBoard, registerClick, removeListener};
 })();
 
 // Person factory
@@ -119,30 +124,34 @@ const gameControl = (() => {
                 gameState.result = "win";
                 gameState.winner = gameState.playerTurn;
                 console.log("Winner: " + gameState.winner.getMarker());
-                break;
+                return true;
 
             case gameBoard.isBoardFull():
                 gameState.isGameOn = false;
                 gameState.result = "tie";
                 console.log(gameState.result);
-                break;
+                return true;
 
             default: 
                 console.log("Game still going");
-                break;
+                return false;
+        }
+    };
+
+    const eventListener = e => {
+        const index = e.target.getAttribute("data-index");
+        if (gameState.isGameOn && index !== undefined) {
+            move(index);
+            if (checkGameOver() && gameState.isGameOn === false) {
+                displayController.removeListener(eventListener);
+            }
+            switchPlayerTurn();
         }
     };
 
     const playGame = () => {
         _initGame();
-        displayController.registerClick(e => {
-            const index = e.target.getAttribute("data-index");
-            if (gameState.isGameOn && index !== undefined) {
-                move(index);
-                checkGameOver();
-                switchPlayerTurn();
-            }
-        })
+        displayController.registerClick(eventListener);
     };
 
     return {playGame};
