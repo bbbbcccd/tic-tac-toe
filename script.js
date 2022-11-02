@@ -66,6 +66,7 @@ const gameControl = (() => {
 
 // Stores the current game state
     const gameState = {
+        players: [],
         isGameOn: false,
         playerTurn: null,
         result: null,
@@ -77,10 +78,29 @@ const gameControl = (() => {
         gameState.isGameOn = true;
         const p1 = Person("Player 1", "X");
         const p2 = Person("Player 2", "O");
+        gameState.players.push(p1, p2);
         gameState.playerTurn = p1;
         gameBoard.clearBoard();
         displayController.clearBoard();
     };
+
+// Make a move in the game
+    const move = index => {
+        if (gameBoard.addMarkerToBoard(gameState.playerTurn.getMarker(), index)) {
+            const newBoard = gameBoard.getBoard();
+            displayController.renderBoard(newBoard);
+            switchPlayerTurn();
+        }
+    };    
+
+// Switch playerTurn in gameState
+    const switchPlayerTurn = () => {
+        if (gameState.playerTurn.getMarker() === gameState.players[0].getMarker()) {
+            gameState.playerTurn = gameState.players[1];
+        } else {
+            gameState.playerTurn = gameState.players[0];
+        }
+    }
 
     const playGame = () => {
         _initGame();
