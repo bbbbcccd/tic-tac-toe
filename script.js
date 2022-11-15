@@ -92,6 +92,7 @@ const gameControl = (() => {
         gameState.winner = null;
         gameBoard.clearBoard();
         displayController.clearBoard();
+        displayController.resultContainer.textContent = "";
     };
 
 // Make a move in the game
