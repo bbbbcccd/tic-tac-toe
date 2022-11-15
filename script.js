@@ -26,6 +26,7 @@ const gameBoard = (() => {
 const displayController = (() => {
     const _gameBoard = document.querySelector(".gameboard");
     const restartBtn = document.querySelector("button.restart-game");
+    const resultContainer = document.querySelector("#result-container");
 
     const _loopBoard = (fn) => {
         for (const cell of _gameBoard.children) {
@@ -51,7 +52,7 @@ const displayController = (() => {
         _gameBoard.removeEventListener("click", fn);
     }
 
-    return {renderBoard, clearBoard, registerClick, removeListener, restartBtn};
+    return {renderBoard, clearBoard, registerClick, removeListener, restartBtn, resultContainer};
 })();
 
 // Person factory
