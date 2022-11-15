@@ -160,5 +160,7 @@ const gameControl = (() => {
 
     displayController.restartBtn.addEventListener("click", playGame);
     
+    playGame();
+    
     return {playGame};
 })();
