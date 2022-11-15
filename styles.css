@@ -6,6 +6,20 @@ body {
     display: flex;
     flex-direction: column;
 }
+div.player-container {
+    flex: none;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 3rem;
+    border: 1px solid grey;
+}
+
+.player-container>.player {
+    border-radius: 1rem;
+    padding: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
 
 div.gameboard {
     flex: none;
