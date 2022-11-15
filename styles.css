@@ -21,6 +21,10 @@ div.player-container {
     font-weight: bold;
 }
 
+.player-turn {
+    border: 2px solid red;
+}
+
 div.gameboard {
     flex: none;
     width: 300px;
