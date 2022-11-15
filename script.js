@@ -24,9 +24,11 @@ const gameBoard = (() => {
 
 // displayController module controls the html elements of the board
 const displayController = (() => {
+    const playerX = document.querySelector("#playerX");
+    const playerO = document.querySelector("#playerO");
     const _gameBoard = document.querySelector(".gameboard");
-    const restartBtn = document.querySelector("button.restart-game");
     const resultContainer = document.querySelector(".result-container");
+    const restartBtn = document.querySelector("button.restart-game");
 
     const _loopBoard = (fn) => {
         for (const cell of _gameBoard.children) {
@@ -52,7 +54,7 @@ const displayController = (() => {
         _gameBoard.removeEventListener("click", fn);
     }
 
-    return {renderBoard, clearBoard, registerClick, removeListener, restartBtn, resultContainer};
+    return {renderBoard, clearBoard, registerClick, removeListener, playerX, playerO, resultContainer, restartBtn};
 })();
 
 // Person factory
@@ -91,6 +93,7 @@ const gameControl = (() => {
         gameState.result = null;
         gameState.winner = null;
         gameBoard.clearBoard();
+        displayController.playerX.classList.add("player-turn");
         displayController.clearBoard();
         displayController.resultContainer.textContent = "";
     };
@@ -100,16 +103,22 @@ const gameControl = (() => {
         if (gameBoard.addMarkerToBoard(gameState.playerTurn.getMarker(), index)) {
             const newBoard = gameBoard.getBoard();
             displayController.renderBoard(newBoard);
-        }
+            return true;
+        } else {
+            return false;
+        }        
     };    
 
-// Switch playerTurn in gameState
+// Switch playerTurn in gameState and updates display of player container
     const switchPlayerTurn = () => {
         if (gameState.playerTurn.getMarker() === gameState.players[0].getMarker()) {
             gameState.playerTurn = gameState.players[1];
         } else {
             gameState.playerTurn = gameState.players[0];
         }
+
+        displayController.playerO.classList.toggle("player-turn");
+        displayController.playerX.classList.toggle("player-turn");
     }
 
 // Checks if game is over 
@@ -143,13 +152,14 @@ const gameControl = (() => {
     const eventListener = e => {
         const index = e.target.getAttribute("data-index");
         if (gameState.isGameOn && index !== undefined) {
-            move(index);
-            let result = checkGameOver();
-            if (gameState.isGameOn === false) {
-                displayController.resultContainer.textContent = result;
-                displayController.removeListener(eventListener);
+            if (move(index)) {
+                let result = checkGameOver();
+                if (gameState.isGameOn === false) {
+                    displayController.resultContainer.textContent = result;
+                    displayController.removeListener(eventListener);
+                }
+                switchPlayerTurn();
             }
-            switchPlayerTurn();
         }
     };
 
@@ -161,6 +171,6 @@ const gameControl = (() => {
     displayController.restartBtn.addEventListener("click", playGame);
     
     playGame();
-    
+
     return {playGame};
 })();
