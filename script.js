@@ -131,7 +131,7 @@ const gameControl = (() => {
 
             case gameBoard.isBoardFull():
                 gameState.isGameOn = false;
-                gameState.result = "tie";
+                gameState.result = "It's a tie";
                 return gameState.result;
 
             default: 
