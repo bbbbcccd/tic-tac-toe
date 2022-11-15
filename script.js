@@ -26,7 +26,7 @@ const gameBoard = (() => {
 const displayController = (() => {
     const _gameBoard = document.querySelector(".gameboard");
     const restartBtn = document.querySelector("button.restart-game");
-    const resultContainer = document.querySelector("#result-container");
+    const resultContainer = document.querySelector(".result-container");
 
     const _loopBoard = (fn) => {
         for (const cell of _gameBoard.children) {
@@ -126,18 +126,16 @@ const gameControl = (() => {
                 gameState.isGameOn = false;
                 gameState.result = "win";
                 gameState.winner = gameState.playerTurn;
-                console.log("Winner: " + gameState.winner.getMarker());
-                return true;
+                return "Winner: " + gameState.winner.getMarker();
+                
 
             case gameBoard.isBoardFull():
                 gameState.isGameOn = false;
                 gameState.result = "tie";
-                console.log(gameState.result);
-                return true;
+                return gameState.result;
 
             default: 
-                console.log("Game still going");
-                return false;
+                return "Game still going";
         }
     };
 
@@ -145,7 +143,9 @@ const gameControl = (() => {
         const index = e.target.getAttribute("data-index");
         if (gameState.isGameOn && index !== undefined) {
             move(index);
-            if (checkGameOver() && gameState.isGameOn === false) {
+            let result = checkGameOver();
+            if (gameState.isGameOn === false) {
+                displayController.resultContainer.textContent = result;
                 displayController.removeListener(eventListener);
             }
             switchPlayerTurn();
