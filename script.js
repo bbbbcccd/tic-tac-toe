@@ -94,6 +94,9 @@ const gameControl = (() => {
         gameState.winner = null;
         gameBoard.clearBoard();
         displayController.playerX.classList.add("player-turn");
+        if (displayController.playerO.classList.contains("player-turn")) {
+            displayController.playerO.classList.remove("player-turn");
+        }
         displayController.clearBoard();
         displayController.resultContainer.textContent = "";
     };
